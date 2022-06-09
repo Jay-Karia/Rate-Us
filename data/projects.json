@@ -2,37 +2,37 @@
     {
         "title": "Calculator",
         "url": "https://Calculator.jaysk.repl.co",
-        "slug": "calc",
+        "slug": "Calculator",
         "desc": "A Simple Calculator made by Jay"
     },
     {
         "title": "TicTacToe",
         "url": "https://TicTacToe.jaysk.repl.co",
-        "slug": "tictactoe",
+        "slug": "TicTacToe",
         "desc": "TicTacToe game you can enjoy with friends and family"
     },
     {
         "title": "Cricket Player Stats",
         "url": "https://Cricket-Player-Statistics.jaysk.repl.co",
-        "slug": "cricket",
+        "slug": "Cricket-Player-Statistics",
         "desc": "You can calculate the statistics of an individual cricket player"
     },
     {
         "title": "My Notes",
         "url": "https://My-Notes.jaysk.repl.co",
-        "slug": "notes",
+        "slug": "My-Notes",
         "desc": "Here you can save notes in your local machine and share among others"
     },
     {
         "title": "Toss",
         "url": "https://Toss.jaysk.repl.co",
-        "slug": "toss",
+        "slug": "Toss",
         "desc": "A Simple Toss App"
     },
     {
         "title": "Rate Us",
         "url": "https://Rate-Us.jaysk.repl.co",
-        "slug": "rateUs",
+        "slug": "Rate-Us",
         "desc": "A Backend Web App where you can rate my other projects"
     }
 ]
