@@ -1,0 +1,145 @@
+<style>
+  .card {
+    border: 2px solid black;
+  }
+
+  .container {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .form-floating {
+    margin-top: 20px;
+  }
+
+  #floatingInput:hover {
+    background-color: rgb(227, 251, 255);
+    border: 2px solid rgb(43, 214, 226);
+  }
+
+  .list-group-item {
+    width: 5rem;
+    border: none;
+  }
+
+  .btn-primary {
+    margin-top: 20px;
+  }
+
+  .items {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  .rate {
+    float: left;
+    height: 55px;
+    padding: 0 10px;
+    border-bottom: 1px solid black;
+    border-left: 1px solid black;
+  }
+
+  .rate:hover {
+    background-color: #fdf7e2;
+    ;
+  }
+
+  .rate:not(:checked)>input {
+    position: absolute;
+    top: -9999px;
+  }
+
+  .rate:not(:checked)>label {
+    float: right;
+    width: 1em;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;
+    font-size: 35px;
+    color: #ccc;
+  }
+
+  .rate:not(:checked)>label:before {
+    content: '★ ';
+  }
+
+  .rate>input:checked~label {
+    color: #ffc700;
+  }
+
+  .rate:not(:checked)>label:hover,
+  .rate:not(:checked)>label:hover~label {
+    color: #deb217;
+  }
+
+  .rate>input:checked+label:hover,
+  .rate>input:checked+label:hover~label,
+  .rate>input:checked~label:hover,
+  .rate>input:checked~label:hover~label,
+  .rate>label:hover~input:checked~label {
+    color: #c59b08;
+  }
+
+  .desc {
+    margin-top: 20px;
+    height: 200px;
+    resize: none;
+  }
+
+  .desc:hover {
+    background-color: rgb(223, 255, 224);
+    border: 2px solid rgb(0, 128, 17);
+  }
+
+  /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
+</style>
+<div class="container">
+  <form action="/submit" method="post">
+    <div class="card" style="width: 100rem;">
+      <div class="card-body">
+        <h5 class="card-title h2">{{title}}</h5>
+      </div>
+      <ul class="list-group list-group-flush">
+        <div class="items">
+          <li class="list-group-item">URL</li>
+          <a class="btn btn-secondary" href={{url}} target="_black" role="button" aria-disabled="true">{{url}}</a>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" name="name" id="floatingInput" placeholder="Name">
+          <label for="floatingInput">Name</label>
+        </div>
+      </ul>
+      <div class="card-body">
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <title>Star rating using pure CSS</title>
+        </head>
+        <div class="rate">
+          <input type="radio" id="star5" name="rate" value="5" />
+          <label for="star5" title="text">5 stars</label>
+          <input type="radio" id="star4" name="rate" value="4" />
+          <label for="star4" title="text">4 stars</label>
+          <input type="radio" id="star3" name="rate" value="3" />
+          <label for="star3" title="text">3 stars</label>
+          <input type="radio" id="star2" name="rate" value="2" />
+          <label for="star2" title="text">2 stars</label>
+          <input type="radio" id="star1" name="rate" value="1" />
+          <label for="star1" title="text">1 star</label>
+        </div>
+        <div class="input-group">
+          <textarea class="form-control desc" aria-label="With textarea" name="description" rows="30" cols="50"
+            placeholder="Description"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </div>
+  </form>
+</div>
