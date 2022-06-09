@@ -24,6 +24,25 @@
         height: 2px;
         width: 2px;
     }
+
+    .p-3 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .p-3 a {
+        height: 2em;
+        width: 2em;
+        padding: 0;
+        padding-top: 2px;
+    }
+
+    .p-3 img {
+        width: 1.7em;
+        height: 1.8em;
+        border-radius: 9px;
+    }
 </style>
 
 <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
@@ -40,83 +59,35 @@
     </div>
 </nav>
 <div class="container">
+    {{#each context}}
     <div class="card text-center">
         <div class="card-header h2">
-            Calculator
+            {{this.title}}
         </div>
         <div class="card">
             <div class="card-body">
-                <p class="h5">A Simple Calculator made by Jay</p>
-                <a href="/rate/calc" class="btn btn-primary">Rate</a>
+                <p class="h5">{{this.desc}}</p>
+                <a href="/rate/{{this.slug}}" class="btn btn-primary">Rate</a>
             </div>
         </div>
         <div class="card-footer text-muted">
         </div>
     </div>
-    <div class="card text-center">
-        <div class="card-header h2">
-            TicTacToe
-        </div>
-        <div class="card">
-            <div class="card-body">
-                <p class="h5">TicTacToe game you can enjoy with friends and family</p>
-                <a href="/rate/tictactoe" class="btn btn-primary">Rate</a>
-            </div>
-        </div>
-        <div class="card-footer text-muted">
-        </div>
-    </div>
-    <div class="card text-center">
-        <div class="card-header h2">
-            Cricket Player Stats
-        </div>
-        <div class="card">
-            <div class="card-body">
-                <p class="h5">You can calculate the statistics of an individual cricket player</p>
-                <a href="/rate/cricket" class="btn btn-primary">Rate</a>
-            </div>
-        </div>
-        <div class="card-footer text-muted">
-        </div>
-    </div>
-    <div class="card text-center">
-        <div class="card-header h2">
-            My Notes
-        </div>
-        <div class="card">
-            <div class="card-body">
-                <p class="h5">Here you can save notes in your local machine and share among others</p>
-                <a href="/rate/notes" class="btn btn-primary">Rate</a>
-            </div>
-        </div>
-        <div class="card-footer text-muted">
-        </div>
-    </div>
-    <div class="card text-center">
-        <div class="card-header h2">
-            Toss
-        </div>
-        <div class="card">
-            <div class="card-body">
-                <p class="h5">A Simple Toss App</p>
-                <a href="/rate/toss" class="btn btn-primary">Rate</a>
-            </div>
-        </div>
-        <div class="card-footer text-muted">
-        </div>
-    </div>
+    {{/each}}
     {{!-- Footer --}}
     <footer class="text-center text-white" style="background-color: #21081a;">
-        <div class="container p-4"></div>
+        <div class="container p-1"></div>
         <p class="h3">Source Code</p>
-
+        <a class="btn btn-primary btn-floating m-1" style="background-color: #3b5998;"
+            href="https://github.com/Jay-Karia/Rate-Us" target="_blank" role=""><i class=""></i>
+            ↗
+        </a>
         <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-
-            <a class="btn btn-primary btn-floating m-1" style="background-color: #3b5998;"
-                href="https://github.com/Jay-Karia/Rate-Us" target="_blank" role=""><i class=""></i>
-                ↗
+            <p class="h5">My Profile</p>
+            <a class="btn btn-primary btn-floating m-1" style="background-color: #21081a; border: none"
+                href="https://github.com/Jay-Karia" target="_blank" role=""><i class=""></i>
+                <img src="github.png" alt="">
             </a>
-
         </div>
     </footer>
 </div>
