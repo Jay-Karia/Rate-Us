@@ -2,35 +2,84 @@ const express = require('express')
 const router = express.Router();
 const path = require('path')
 
-const Rates = require('../Models/rates')
+const fs = require('fs')
+const projectsData = fs.readFileSync(path.join(__dirname, '../data/projects.json'));
+const projects = JSON.parse(projectsData);
+
+const Rates = require('../Models/rates');
+
+let titles = [];
+let slugs = [];
+let urls = []
+let desc = [];
+
+projects.forEach((e, index) => {
+    titles.push(projects[index].title)
+    slugs.push(projects[index].slug)
+    urls.push(projects[index].url)
+    desc.push(projects[index].desc)
+});
+
 
 router.get('/', (req, res) => {
-    res.render('home')
+
+    let context = []
+    let cont = {};
+    projects.forEach((e, index) => {
+        cont = {
+            'title': titles[index],
+            'slug': slugs[index],
+            'desc': desc[index]
+        }
+        context.push(cont)
+    });
+    res.render('home', {
+        "titles": titles,
+        "slugs": slugs,
+        "desc": desc,
+        "context": context
+    })
+    // cont = {
+    //     'title': titles,
+    //     'slug': slugs,
+    //     'desc': desc
+    // }
+
 })
 
 // Global
-let local_context = {
-    'title': '',
-    'url': '',
-};
+let cont = {}
 
 router.get('/rate/:slug', (req, res) => {
-    globalThis.local_context;
-    let slug = req.params.slug
+    // let local_context = []
+    globalThis.cont;
+    projects.forEach((e, index) => {
+        cont = {
+            'title': titles[index],
+            'url': urls[index],
+        }
+        // local_context.push(cont)
+    })
 
-    if (slug == 'calc') { local_context['title'] = "Calculator"; local_context['url'] = 'https://Calculator.jaysk.repl.co' }
-    else if (slug == 'tictactoe') { local_context['title'] = "TicTacToe"; local_context['url'] = 'https://TicTacToe.jaysk.repl.co' }
-    else if (slug == 'cricket') { local_context['title'] = "Cricket Player Stats"; local_context['url'] = 'https://Cricket-Player-Statistics.jaysk.repl.co' }
-    else if (slug == 'notes') { local_context['title'] = "My Notes"; local_context['url'] = 'https://My-Notes.jaysk.repl.co' }
-    else if (slug == "toss") { local_context['title'] = "Toss"; local_context['url'] = 'https://Toss.jaysk.repl.co' }
+    // let slug = req.params.slug
 
-    res.render('rates', local_context)
+    // if (slug == 'calc') { local_context['title'] = "Calculator"; local_context['url'] = 'https://Calculator.jaysk.repl.co' }
+    // else if (slug == 'tictactoe') { local_context['title'] = "TicTacToe"; local_context['url'] = 'https://TicTacToe.jaysk.repl.co' }
+    // else if (slug == 'cricket') { local_context['title'] = "Cricket Player Stats"; local_context['url'] = 'https://Cricket-Player-Statistics.jaysk.repl.co' }
+    // else if (slug == 'notes') { local_context['title'] = "My Notes"; local_context['url'] = 'https://My-Notes.jaysk.repl.co' }
+    // else if (slug == "toss") { local_context['title'] = "Toss"; local_context['url'] = 'https://Toss.jaysk.repl.co' }
+
+    res.render('rates', {
+        "title": cont.title,
+        "url": cont.url
+    })
 
 })
 
 router.post('/submit', (req, res) => {
+    globalThis.cont;
     let my_local_context = {
-        'title': local_context.title,
+        'title': cont.title,
         'name': '',
         'rate': 0,
         'description': ''
