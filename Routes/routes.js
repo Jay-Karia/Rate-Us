@@ -25,7 +25,7 @@ let cont = {};
 
 router.get('/', (req, res) => {
     globalThis.cont;
-    globalThis.context
+    globalThis.context;
     projects.forEach((e, index) => {
         cont = {
             'title': titles[index],
@@ -40,41 +40,51 @@ router.get('/', (req, res) => {
         "desc": desc,
         "context": context
     })
-    // cont = {
-    //     'title': titles,
-    //     'slug': slugs,
-    //     'desc': desc
-    // }
 
 })
 
 // Global
-
+let context2 = [];
+let cont2 = {}
+let title = [];
 router.get('/rate/:slug', (req, res) => {
-    let title = req.params.slug.replace('-', ' ')
+    globalThis.cont2
+    globalThis.context2
+    globalThis.title;
+    let slug = req.params.slug;
+    index = slugs.indexOf(slug)
+    projects.forEach(e => {
+        cont2 = {
+            'title': titles[index],
+            'url': urls[index]
+        }
+        context2.push(cont2)
+    });
+    title.push(cont2.title)
     res.render('rates', {
-        "title": title,
-        "url": `https://${req.params.slug}.jaysk.repl.co`
+        "title": cont2.title,
+        "url": cont2.url
     })
 })
 
 router.post('/submit', (req, res) => {
-    globalThis.cont;
     let my_local_context = {
-        'title': cont.title,
+        'title': title[0],
         'name': '',
         'rate': 0,
         'description': ''
     };
+
+    
     let name = req.body.name
     let rate = req.body.rate
     let desc = req.body.description
-
-
+    
+    
     my_local_context['name'] = name
     my_local_context['rate'] = rate
     my_local_context['description'] = desc
-
+    
 
     const rates = new Rates({
         "Project Name": my_local_context.title,
