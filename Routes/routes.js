@@ -20,11 +20,12 @@ projects.forEach((e, index) => {
     desc.push(projects[index].desc)
 });
 
+let context = [];
+let cont = {};
 
 router.get('/', (req, res) => {
-
-    let context = []
-    let cont = {};
+    globalThis.cont;
+    globalThis.context
     projects.forEach((e, index) => {
         cont = {
             'title': titles[index],
@@ -48,32 +49,13 @@ router.get('/', (req, res) => {
 })
 
 // Global
-let cont = {}
 
 router.get('/rate/:slug', (req, res) => {
-    // let local_context = []
-    globalThis.cont;
-    projects.forEach((e, index) => {
-        cont = {
-            'title': titles[index],
-            'url': urls[index],
-        }
-        // local_context.push(cont)
-    })
-
-    // let slug = req.params.slug
-
-    // if (slug == 'calc') { local_context['title'] = "Calculator"; local_context['url'] = 'https://Calculator.jaysk.repl.co' }
-    // else if (slug == 'tictactoe') { local_context['title'] = "TicTacToe"; local_context['url'] = 'https://TicTacToe.jaysk.repl.co' }
-    // else if (slug == 'cricket') { local_context['title'] = "Cricket Player Stats"; local_context['url'] = 'https://Cricket-Player-Statistics.jaysk.repl.co' }
-    // else if (slug == 'notes') { local_context['title'] = "My Notes"; local_context['url'] = 'https://My-Notes.jaysk.repl.co' }
-    // else if (slug == "toss") { local_context['title'] = "Toss"; local_context['url'] = 'https://Toss.jaysk.repl.co' }
-
+    let title = req.params.slug.replace('-', ' ')
     res.render('rates', {
-        "title": cont.title,
-        "url": cont.url
+        "title": title,
+        "url": `https://${req.params.slug}.jaysk.repl.co`
     })
-
 })
 
 router.post('/submit', (req, res) => {
