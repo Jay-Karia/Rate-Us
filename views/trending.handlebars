@@ -28,10 +28,6 @@
 
     }
 
-    .one {
-        background-color: rgb(255, 191, 191);
-    }
-
     .list-group-item:hover {
         transition: all .1s ease-out;
     }
@@ -51,12 +47,13 @@
     }
 </style>
 
+{{#each context}}
 <div class="card">
-    <div align="center" class="card-header">
-        Calculator
+    <div align="center" class="card-header" style="background-color: rgb({{this.rgb}}">
+        {{this.titles}}
     </div>
     <div class="card-body">
-        <h5 class="card-title outOff">5 / 5</h5>
+        <h5 class="card-title outOff">{{this.avgs}} / 5</h5>
         <ul class="list-group list-group-flush">
             <li class="list-group-item one">1</li>
             <li class="list-group-item two">2</li>
@@ -67,3 +64,4 @@
         <a href="rate/calc" class="btn btn-primary">Rate</a>
     </div>
 </div>
+{{/each}}
