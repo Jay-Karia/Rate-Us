@@ -1,79 +1,39 @@
-<style>
-    .text-center {
-        margin-top: 40px;
-    }
+<!doctype html>
+<html lang="en">
 
-    .card-header {
-        background-color: rgb(51, 51, 51);
-        color: white;
-        border-top: 2px solid black;
-        border-left: 2px solid black;
-        border-right: 2px solid black;
-    }
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Rate US</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+</head>
 
-    .btn-primary {
-        color: white;
-        border: 1px solid black;
-    }
 
-    .card-body {
-        background-color: rgb(222, 245, 255);
-    }
+<body>
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Rate Us</a>
 
-    img {
-        height: 2px;
-        width: 2px;
-    }
-
-    .p-3 {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .p-3 a {
-        height: 2em;
-        width: 2em;
-        padding: 0;
-        padding-top: 2px;
-    }
-
-    .p-3 img {
-        width: 1.7em;
-        height: 1.8em;
-        border-radius: 9px;
-    }
-</style>
-<div class="container">
-    {{#each context}}
-    <div class="card text-center">
-        <div class="card-header h2">
-            {{this.title}}
-        </div>
-        <div class="card">
-            <div class="card-body">
-                <p class="h5">{{this.desc}}</p>
-                <a href="/rate/{{this.slug}}" class="btn btn-primary">Rate</a>
+            <div class="navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/trending">Trending</a>
+                    </li>
+                </ul>
             </div>
         </div>
-        <div class="card-footer text-muted">
-        </div>
-    </div>
-    {{/each}}
-    {{!-- Footer --}}
-    <footer class="text-center text-white" style="background-color: #21081a;">
-        <div class="container p-1"></div>
-        <p class="h3">Source Code</p>
-        <a class="btn btn-primary btn-floating m-1" style="background-color: #3b5998;"
-            href="https://github.com/Jay-Karia/Rate-Us" target="_blank" role=""><i class=""></i>
-            ↗
-        </a>
-        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-            <p class="h5">My Profile</p>
-            <a class="btn btn-primary btn-floating m-1" style="background-color: #21081a; border: none"
-                href="https://github.com/Jay-Karia" target="_blank" role=""><i class=""></i>
-                <img src="github.png" alt="">
-            </a>
-        </div>
-    </footer>
-</div>
+    </nav>
+    {{{body}}}
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
