@@ -7,7 +7,6 @@ const projectsData = fs.readFileSync(path.join(__dirname, '../data/projects.json
 const projects = JSON.parse(projectsData);
 
 const Rates = require('../Models/rates');
-const { render } = require('express/lib/response');
 
 let titles = [];
 let slugs = [];
@@ -21,6 +20,7 @@ projects.forEach((e, index) => {
     desc.push(projects[index].desc)
 });
 
+let length = projects.length
 // Global
 let context2 = [];
 let cont2 = {}
@@ -39,6 +39,9 @@ router.get('/', (req, res) => {
         }
         context.push(cont)
     });
+    if (context.length > projects.length) {
+        context = context.slice(projects.length)
+    }
     res.render('home', {
         "titles": titles,
         "slugs": slugs,
