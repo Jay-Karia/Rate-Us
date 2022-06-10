@@ -100,7 +100,95 @@ router.post('/submit', (req, res) => {
 })
 
 router.get('/trending', (req, res) => {
-    res.render('trending')
+
+    // Reading Database
+
+    // Data from database
+    let t = ['Calculator', 'Calculator', 'My Notes'] // all titles from database
+    let s = [];
+    // r = {
+    //     'Calculator': [5],
+    //     'TicTacToe': [4, 5],
+    //     'Cricket Player Stats': [3, 2],
+    //     'My Notes': [4, 3, 4, 5],
+    //     'Toss': [],
+    //     'Rate Us': [],
+    // };
+    r = [[1], [2], [3], [4], [5], [0]]
+
+    let list1 = []
+    let indexes = [];
+
+    let context3 = [];
+    let cont3 = []
+
+
+    let avgs = []
+    let counter;
+    let five = '1, 60, 117); color: white';
+    let four = '3, 131, 255';
+    let three = '74, 158, 240';
+    let two = '0, 130, 255';
+    let one = '1, 60, 117); color: white';
+    let rgb = [one, two, three, four, five];
+    let rgbs = []
+
+
+    r.forEach((e, index) => {
+        let R = r[index]
+        let sum = 0;
+        counter = 0;
+        R.forEach((e, index) => {
+            counter = counter + 1
+            sum = sum + e;
+        })
+        avgs.push(sum / counter)
+        if (isNaN(avgs[index]) === true) {
+            avgs[index] = 0;
+        }
+        avgs = avgs.reverse(avgs.sort(function (a, b) { return a - b }))
+        console.log(avgs)
+        let avg = avgs[index]
+
+        if (avg == 0 && avg <= 1) {
+            rgbs.push(rgb[0])
+        } else if (avg > 1 && avg <= 2) {
+            rgbs.push(rgb[1])
+        } else if (avg > 2 && avg <= 3) {
+            rgbs.push(rgb[2])
+        } else if (avg > 3 && avg <= 4) {
+            rgbs.push(rgb[3])
+        } else if (avg > 4 && avg <= 5) {
+            rgbs.push(rgb[4])
+        }
+        sum = 0
+    })
+
+    titles.forEach((e, index) => {
+        list1.push(r[titles[index]])
+        try {
+            cont3 = {
+                'titles': titles[index],
+                'avgs': avgs[index],
+                'rgb': rgbs[index]
+            }
+            context3.push(cont3)
+
+        } catch (e) { }
+    })
+    list1 = list1.reverse(list1.sort())
+
+    t.forEach((e, index) => {
+        indexes.push(titles.indexOf(t[index]))
+        s.push(slugs[indexes[index]])
+    })
+
+    res.render('trending', {
+        'avgs': avgs,
+        'titles': titles,
+        'rgb': rgbs,
+        "context": context3
+    })
 })
 
 module.exports = router;
