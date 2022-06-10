@@ -103,40 +103,32 @@ router.post('/submit', (req, res) => {
 })
 
 router.get('/trending', (req, res) => {
-
+    globalThis.title;
     // Reading Database
 
-    // Data from database
-    let t = ['Calculator', 'Calculator', 'My Notes'] // all titles from database
-    let s = [];
-    // r = {
-    //     'Calculator': [5],
-    //     'TicTacToe': [4, 5],
-    //     'Cricket Player Stats': [3, 2],
-    //     'My Notes': [4, 3, 4, 5],
-    //     'Toss': [],
-    //     'Rate Us': [],
-    // };
-    r = [[1], [2], [3], [4], [5], [0]]
 
+    // Data from database
+    let t = ['Calculator', 'Calculator', 'My Notes']
+    let s = [];
+    r = [[1], [5], [2], [2], [1], [1, 2]]
+
+    // Other logic
     let list1 = []
     let indexes = [];
-
     let context3 = [];
     let cont3 = []
 
-
     let avgs = []
     let counter;
-    let five = '1, 60, 117); color: white';
-    let four = '3, 131, 255';
-    let three = '74, 158, 240';
-    let two = '0, 130, 255';
-    let one = '1, 60, 117); color: white';
+    let one = '153, 255, 255);';
+    let two = '51, 255, 255);';
+    let four = '0, 128, 255);color: white';
+    let three = '0, 128, 128); color: white';
+    let five = '0, 26, 26); color: white';
     let rgb = [one, two, three, four, five];
     let rgbs = []
 
-
+    let obj = []
     r.forEach((e, index) => {
         let R = r[index]
         let sum = 0;
@@ -150,10 +142,12 @@ router.get('/trending', (req, res) => {
             avgs[index] = 0;
         }
         avgs = avgs.reverse(avgs.sort(function (a, b) { return a - b }))
-        console.log(avgs)
-        let avg = avgs[index]
 
-        if (avg == 0 && avg <= 1) {
+    })
+
+    avgs.forEach((e, index) => {
+        let avg = avgs[index]
+        if (avg >= 0 && avg <= 1) {
             rgbs.push(rgb[0])
         } else if (avg > 1 && avg <= 2) {
             rgbs.push(rgb[1])
@@ -164,8 +158,9 @@ router.get('/trending', (req, res) => {
         } else if (avg > 4 && avg <= 5) {
             rgbs.push(rgb[4])
         }
-        sum = 0
+        avgs[index] = Math.round(avgs[index] * 10) / 10
     })
+
 
     titles.forEach((e, index) => {
         list1.push(r[titles[index]])
@@ -177,8 +172,11 @@ router.get('/trending', (req, res) => {
             }
             context3.push(cont3)
 
+
         } catch (e) { }
     })
+
+
     list1 = list1.reverse(list1.sort())
 
     t.forEach((e, index) => {
