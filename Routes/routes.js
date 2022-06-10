@@ -7,6 +7,7 @@ const projectsData = fs.readFileSync(path.join(__dirname, '../data/projects.json
 const projects = JSON.parse(projectsData);
 
 const Rates = require('../Models/rates');
+const { render } = require('express/lib/response');
 
 let titles = [];
 let slugs = [];
@@ -20,6 +21,10 @@ projects.forEach((e, index) => {
     desc.push(projects[index].desc)
 });
 
+// Global
+let context2 = [];
+let cont2 = {}
+let title = [];
 let context = [];
 let cont = {};
 
@@ -43,10 +48,6 @@ router.get('/', (req, res) => {
 
 })
 
-// Global
-let context2 = [];
-let cont2 = {}
-let title = [];
 router.get('/rate/:slug', (req, res) => {
     globalThis.cont2
     globalThis.context2
@@ -75,16 +76,16 @@ router.post('/submit', (req, res) => {
         'description': ''
     };
 
-    
+
     let name = req.body.name
     let rate = req.body.rate
     let desc = req.body.description
-    
-    
+
+
     my_local_context['name'] = name
     my_local_context['rate'] = rate
     my_local_context['description'] = desc
-    
+
 
     const rates = new Rates({
         "Project Name": my_local_context.title,
@@ -96,6 +97,10 @@ router.post('/submit', (req, res) => {
 
     res.render('submit')
 
+})
+
+router.get('/trending', (req, res) => {
+    res.render('trending')
 })
 
 module.exports = router;
