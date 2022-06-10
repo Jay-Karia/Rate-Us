@@ -105,12 +105,10 @@ router.post('/submit', (req, res) => {
 router.get('/trending', (req, res) => {
     globalThis.title;
     // Reading Database
-
-
     // Data from database
     let t = ['Calculator', 'Calculator', 'My Notes']
-    let s = [];
     r = [[4], [5], [4], [1], [2], [3]]
+    let s = [];
 
     // Other logic
     let list1 = []
@@ -120,11 +118,11 @@ router.get('/trending', (req, res) => {
 
     let avgs = []
     let counter;
-    let one = '153, 255, 255);';
-    let two = '51, 255, 255);';
-    let four = '0, 128, 255);color: white';
-    let three = '0, 128, 128); color: white';
-    let five = '0, 26, 26); color: white';
+    let one = '0, 102, 77); color: white';
+    let two = '0, 26, 102);color: white';
+    let three = '51, 0, 102);color: white';
+    let four = '102, 0, 77);color: white';
+    let five = '102, 0, 26); color: white';
     let rgb = [one, two, three, four, five];
     let rgbs = []
 
