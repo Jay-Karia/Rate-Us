@@ -110,7 +110,7 @@ router.get('/trending', (req, res) => {
     // Data from database
     let t = ['Calculator', 'Calculator', 'My Notes']
     let s = [];
-    r = [[1], [5], [2], [2], [1], [1, 2]]
+    r = [[4], [5], [4], [1], [2], [3]]
 
     // Other logic
     let list1 = []
@@ -141,7 +141,14 @@ router.get('/trending', (req, res) => {
         if (isNaN(avgs[index]) === true) {
             avgs[index] = 0;
         }
+        obj.push(avgs[index] + ' ' + titles[index])
+        sum = 0
         avgs = avgs.reverse(avgs.sort(function (a, b) { return a - b }))
+        obj.sort(function (a, b) {
+            return a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' });
+        });
+
+        obj.reverse();
 
     })
 
@@ -160,13 +167,19 @@ router.get('/trending', (req, res) => {
         }
         avgs[index] = Math.round(avgs[index] * 10) / 10
     })
+    let titles2 = []
+    obj.forEach((e, index) => {
+        let [first, ...rest] = obj[index].split(' ')
+        rest = rest.join(' ')
+        titles2.push(rest)
+    })
 
 
     titles.forEach((e, index) => {
         list1.push(r[titles[index]])
         try {
             cont3 = {
-                'titles': titles[index],
+                'titles': titles2[index],
                 'avgs': avgs[index],
                 'rgb': rgbs[index]
             }
@@ -186,7 +199,7 @@ router.get('/trending', (req, res) => {
 
     res.render('trending', {
         'avgs': avgs,
-        'titles': titles,
+        'titles2': titles2,
         'rgb': rgbs,
         "context": context3
     })
