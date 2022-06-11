@@ -7,6 +7,7 @@ const projectsData = fs.readFileSync(path.join(__dirname, '../data/projects.json
 const projects = JSON.parse(projectsData);
 
 const Rates = require('../Models/rates');
+const { exit } = require('process');
 
 let titles = [];
 let slugs = [];
@@ -104,97 +105,123 @@ router.post('/submit', (req, res) => {
 
 router.get('/trending', (req, res) => {
     globalThis.title;
+    let count = 6;
     // Reading Database
-    // Data from database
-    let t = ['Calculator', 'Calculator', 'My Notes']
-    r = [[4], [5], [4], [1], [2], [3]]
-    let s = [];
+    let DBProjects = [];
+    let DBRates = [];
 
-    // Other logic
+
+    Rates.find({}, function (err, data) {
+        globalThis.DBProjects;
+        let project = data.map((p) => { return p['Project Name'] });
+        DBProjects = project
+        getProjects(project)
+        return project
+    });
+    function getProjects(project) {
+        globalThis.DBProjects
+        DBProjects = project
+        DBProjects = [... new Set(DBProjects)]
+        DBProjects = DBProjects.filter(e => e)
+        for (let index = 0; index <= DBProjects.length; index++) {
+            if (DBProjects[index] === undefined || DBProjects === null) {
+                DBProjects[index] = ''
+                DBProjects = DBProjects.filter(e => e)
+            }
+            Rates.find({ 'Project Name': DBProjects[index] }, ((err, data) => {
+                let rates = data.map((ra) => { return ra['Rates'] });
+                let projectName = data.map((pr) => { return pr['Project Name'] });
+                DBRates.push(rates)
+                dataDB(DBRates)
+            }))
+        }
+    }
     let list1 = []
     let indexes = [];
     let context3 = [];
     let cont3 = []
-
-    let avgs = []
-    let counter;
-    let one = '0, 102, 77); color: white';
-    let two = '0, 26, 102);color: white';
-    let three = '51, 0, 102);color: white';
-    let four = '102, 0, 77);color: white';
-    let five = '102, 0, 26); color: white';
-    let rgb = [one, two, three, four, five];
     let rgbs = []
 
-    let obj = []
-    r.forEach((e, index) => {
-        let R = r[index]
-        let sum = 0;
-        counter = 0;
-        R.forEach((e, index) => {
-            counter = counter + 1
-            sum = sum + e;
-        })
-        avgs.push(sum / counter)
-        if (isNaN(avgs[index]) === true) {
-            avgs[index] = 0;
-        }
-        obj.push(avgs[index] + ' ' + titles[index])
-        sum = 0
-        avgs = avgs.reverse(avgs.sort(function (a, b) { return a - b }))
-        obj.sort(function (a, b) {
-            return a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' });
-        });
-
-        obj.reverse();
-
-    })
-
-    avgs.forEach((e, index) => {
-        let avg = avgs[index]
-        if (avg >= 0 && avg <= 1) {
-            rgbs.push(rgb[0])
-        } else if (avg > 1 && avg <= 2) {
-            rgbs.push(rgb[1])
-        } else if (avg > 2 && avg <= 3) {
-            rgbs.push(rgb[2])
-        } else if (avg > 3 && avg <= 4) {
-            rgbs.push(rgb[3])
-        } else if (avg > 4 && avg <= 5) {
-            rgbs.push(rgb[4])
-        }
-        avgs[index] = Math.round(avgs[index] * 10) / 10
-    })
     let titles2 = []
-    obj.forEach((e, index) => {
-        let [first, ...rest] = obj[index].split(' ')
-        rest = rest.join(' ')
-        titles2.push(rest)
-    })
+    let avgs = []
+    // Data from database
+    function dataDB(r) {
 
+        console.log(r)
+        // Other logic
 
-    titles.forEach((e, index) => {
-        list1.push(r[titles[index]])
-        try {
-            cont3 = {
-                'titles': titles2[index],
-                'avgs': avgs[index],
-                'rgb': rgbs[index]
+        let counter;
+        let one = '0, 102, 77); color: white';
+        let two = '0, 26, 102);color: white';
+        let three = '51, 0, 102);color: white';
+        let four = '102, 0, 77);color: white';
+        let five = '102, 0, 26); color: white';
+        let rgb = [one, two, three, four, five];
+
+        let obj = []
+        r.forEach((e, index) => {
+            let R = r[index]
+            let sum = 0;
+            counter = 0;
+            R.forEach((e, index) => {
+                counter = counter + 1
+                sum = sum + e;
+            })
+            avgs.push(sum / counter)
+            if (isNaN(avgs[index]) === true) {
+                avgs[index] = 0;
             }
-            context3.push(cont3)
+            obj.push(avgs[index] + ' ' + titles[index])
+            sum = 0
+            avgs = avgs.reverse(avgs.sort(function (a, b) { return a - b }))
+            obj.sort(function (a, b) {
+                return a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' });
+            });
+
+            obj.reverse();
+
+        })
+
+        avgs.forEach((e, index) => {
+            let avg = avgs[index]
+            if (avg >= 0 && avg <= 1) {
+                rgbs.push(rgb[0])
+            } else if (avg > 1 && avg <= 2) {
+                rgbs.push(rgb[1])
+            } else if (avg > 2 && avg <= 3) {
+                rgbs.push(rgb[2])
+            } else if (avg > 3 && avg <= 4) {
+                rgbs.push(rgb[3])
+            } else if (avg > 4 && avg <= 5) {
+                rgbs.push(rgb[4])
+            }
+            avgs[index] = Math.round(avgs[index] * 10) / 10
+        })
+        obj.forEach((e, index) => {
+            let [first, ...rest] = obj[index].split(' ')
+            rest = rest.join(' ')
+            titles2.push(rest)
+        })
 
 
-        } catch (e) { }
-    })
+        titles.forEach((e, index) => {
+            list1.push(r[titles[index]])
+            try {
+                cont3 = {
+                    'titles': titles2[index],
+                    'avgs': avgs[index],
+                    'rgb': rgbs[index]
+                }
+                context3.push(cont3)
 
 
-    list1 = list1.reverse(list1.sort())
+            } catch (e) { }
+        })
 
-    t.forEach((e, index) => {
-        indexes.push(titles.indexOf(t[index]))
-        s.push(slugs[indexes[index]])
-    })
 
+        list1 = list1.reverse(list1.sort())
+
+    }
     res.render('trending', {
         'avgs': avgs,
         'titles2': titles2,
