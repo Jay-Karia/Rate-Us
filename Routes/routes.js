@@ -7,8 +7,6 @@ const projectsData = fs.readFileSync(path.join(__dirname, '../data/projects.json
 const projects = JSON.parse(projectsData);
 
 const Rates = require('../Models/rates');
-const { exit } = require('process');
-const { exec } = require('child_process');
 
 let titles = [];
 let slugs = [];
@@ -105,6 +103,9 @@ router.post('/submit', (req, res) => {
 })
 
 var DBRates = [];
+let RatesObj = [];
+let titles3 = []
+
 router.get('/trending', (req, res) => {
     globalThis.title;
     let count = 6;
@@ -131,16 +132,43 @@ router.get('/trending', (req, res) => {
             Rates.find({ 'Project Name': DBProjects[index] }, ((err, data) => {
                 let rates = data.map((ra) => { return ra['Rates'] });
                 let projectName = data.map((pr) => { return pr['Project Name'] });
-                console.log(projectName, rates)
                 DBRates.push(rates)
+
+                if (projectName[index] === undefined || projectName === null) {
+                    projectName[index] = ''
+                    projectName = projectName.filter(e => e)
+                }
+
+                RatesObj.push(rates + ' ' + projectName)
+                sum = 0
+                avgs = avgs.reverse(avgs.sort(function (a, b) { return a - b }))
+                RatesObj.sort(function (a, b) {
+                    return a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' });
+                });
+
+                RatesObj.reverse();
+
+                RatesObj = [... new Set(RatesObj)]
+                RatesObj = RatesObj.filter(e => e)
+                for (let index = 0; index <= RatesObj.length; index++) {
+                    if (RatesObj[index] === undefined || RatesObj === null) {
+                        RatesObj[index] = ''
+                        RatesObj = RatesObj.filter(e => e)
+                    }
+                }
+
                 if (index == count - 1) {
-                    dataDB(DBRates)
+                    RatesObj.forEach((e, index) => {
+                        let [first, ...rest] = RatesObj[index].split(' ')
+                        rest = rest.join(' ')
+                        titles3.push(rest)
+                    })
+                    dataDB(DBRates, titles3)
                 }
             }))
         }
     }
     let list1 = []
-    let indexes = [];
     let context3 = [];
     let cont3 = []
     let rgbs = []
@@ -148,7 +176,7 @@ router.get('/trending', (req, res) => {
     let titles2 = []
     let avgs = []
     // Data from database
-    function dataDB(r) {
+    function dataDB(r, titles3) {
         // Other logic
 
         let counter;
@@ -206,10 +234,10 @@ router.get('/trending', (req, res) => {
 
 
         titles.forEach((e, index) => {
-            list1.push(r[titles[index]])
+            list1.push(r[titles2[index]])
             try {
                 cont3 = {
-                    'titles': titles2[index],
+                    'titles': titles3[index],
                     'avgs': avgs[index],
                     'rgb': rgbs[index]
                 }
@@ -223,10 +251,10 @@ router.get('/trending', (req, res) => {
         list1 = list1.reverse(list1.sort())
         renderTemplate(context3, avgs, titles2, rgbs)
     }
-    function renderTemplate(context3, avgs, titles2, rgbs) {
+    function renderTemplate(context3, avgs, titles3, rgbs) {
         res.render('trending', {
             'avgs': avgs,
-            'titles2': titles2,
+            'titles3': titles3,
             'rgb': rgbs,
             "context": context3
         })
