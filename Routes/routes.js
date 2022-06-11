@@ -162,7 +162,11 @@ router.get('/trending', (req, res) => {
                         let [first, ...rest] = RatesObj[index].split(' ')
                         rest = rest.join(' ')
                         titles3.push(rest)
+                        if (titles3[index] === '') {
+                            titles3.splice(index, 1)
+                        }
                     })
+                    console.log(titles3)
                     dataDB(DBRates, titles3)
                 }
             }))
@@ -233,8 +237,8 @@ router.get('/trending', (req, res) => {
         })
 
 
-        titles.forEach((e, index) => {
-            list1.push(r[titles2[index]])
+        titles3.forEach((e, index) => {
+            list1.push(r[titles3[index]])
             try {
                 cont3 = {
                     'titles': titles3[index],
@@ -249,7 +253,7 @@ router.get('/trending', (req, res) => {
 
 
         list1 = list1.reverse(list1.sort())
-        renderTemplate(context3, avgs, titles2, rgbs)
+        renderTemplate(context3, avgs, titles3, rgbs)
     }
     function renderTemplate(context3, avgs, titles3, rgbs) {
         res.render('trending', {
