@@ -8,6 +8,7 @@ const projects = JSON.parse(projectsData);
 
 const Rates = require('../Models/rates');
 const { exit } = require('process');
+const { exec } = require('child_process');
 
 let titles = [];
 let slugs = [];
@@ -103,13 +104,12 @@ router.post('/submit', (req, res) => {
 
 })
 
+var DBRates = [];
 router.get('/trending', (req, res) => {
     globalThis.title;
     let count = 6;
     // Reading Database
     let DBProjects = [];
-    let DBRates = [];
-
 
     Rates.find({}, function (err, data) {
         globalThis.DBProjects;
@@ -131,8 +131,11 @@ router.get('/trending', (req, res) => {
             Rates.find({ 'Project Name': DBProjects[index] }, ((err, data) => {
                 let rates = data.map((ra) => { return ra['Rates'] });
                 let projectName = data.map((pr) => { return pr['Project Name'] });
+                console.log(projectName, rates)
                 DBRates.push(rates)
-                dataDB(DBRates)
+                if (index == count - 1) {
+                    dataDB(DBRates)
+                }
             }))
         }
     }
@@ -146,16 +149,14 @@ router.get('/trending', (req, res) => {
     let avgs = []
     // Data from database
     function dataDB(r) {
-
-        console.log(r)
         // Other logic
 
         let counter;
-        let one = '0, 102, 77); color: white';
-        let two = '0, 26, 102);color: white';
-        let three = '51, 0, 102);color: white';
-        let four = '102, 0, 77);color: white';
-        let five = '102, 0, 26); color: white';
+        let one = '0, 102, 77';
+        let two = '0, 26, 102';
+        let three = '51, 0, 102';
+        let four = '102, 0, 77';
+        let five = '102, 0, 26';
         let rgb = [one, two, three, four, five];
 
         let obj = []
@@ -220,14 +221,16 @@ router.get('/trending', (req, res) => {
 
 
         list1 = list1.reverse(list1.sort())
-
+        renderTemplate(context3, avgs, titles2, rgbs)
     }
-    res.render('trending', {
-        'avgs': avgs,
-        'titles2': titles2,
-        'rgb': rgbs,
-        "context": context3
-    })
+    function renderTemplate(context3, avgs, titles2, rgbs) {
+        res.render('trending', {
+            'avgs': avgs,
+            'titles2': titles2,
+            'rgb': rgbs,
+            "context": context3
+        })
+    }
 })
 
 module.exports = router;
