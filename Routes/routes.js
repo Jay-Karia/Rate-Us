@@ -106,6 +106,7 @@ var DBRates = [];
 let RatesObj = [];
 let titles3 = []
 let context4 = []
+let rates2 = []
 
 router.get('/trending', (req, res) => {
     globalThis.title;
@@ -142,13 +143,11 @@ router.get('/trending', (req, res) => {
                     projectName = projectName.filter(e => e)
                 }
 
+                // Average
                 RatesObj.push(rates + ' ' + projectName)
-                sum = 0
-                avgs = avgs.reverse(avgs.sort(function (a, b) { return a - b }))
                 RatesObj.sort(function (a, b) {
                     return a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' });
                 });
-
                 RatesObj.reverse();
 
                 RatesObj = [... new Set(RatesObj)]
@@ -181,8 +180,6 @@ router.get('/trending', (req, res) => {
     let list1 = []
     let cont3 = []
     let rgbs = []
-
-    let titles2 = []
     let avgs = []
     // Data from database
     function dataDB(r, titles3, RatesObj) {
@@ -196,7 +193,6 @@ router.get('/trending', (req, res) => {
         let five = '102, 0, 26';
         let rgb = [one, two, three, four, five];
 
-        let obj = []
         r.forEach((e, index) => {
             let R = r[index]
             let sum = 0;
@@ -209,14 +205,8 @@ router.get('/trending', (req, res) => {
             if (isNaN(avgs[index]) === true) {
                 avgs[index] = 0;
             }
-            obj.push(avgs[index] + ' ' + titles[index])
             sum = 0
             avgs = avgs.reverse(avgs.sort(function (a, b) { return a - b }))
-            obj.sort(function (a, b) {
-                return a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' });
-            });
-
-            obj.reverse();
 
         })
         avgs.forEach((e, index) => {
@@ -234,11 +224,6 @@ router.get('/trending', (req, res) => {
             }
             avgs[index] = Math.round(avgs[index] * 10) / 10
         })
-        obj.forEach((e, index) => {
-            let [first, ...rest] = obj[index].split(' ')
-            rest = rest.join(' ')
-            titles2.push(rest)
-        })
 
 
         // titles = titles.reverse();
@@ -253,7 +238,6 @@ router.get('/trending', (req, res) => {
                 context3.push(cont3)
             } catch (e) { }
         })
-
 
         list1 = list1.reverse(list1.sort())
 
