@@ -105,6 +105,7 @@ router.post('/submit', (req, res) => {
 var DBRates = [];
 let RatesObj = [];
 let titles3 = []
+let context4 = []
 
 router.get('/trending', (req, res) => {
     globalThis.title;
@@ -172,7 +173,7 @@ router.get('/trending', (req, res) => {
                         titles3[i] = titles3[i].split(',')[0]
                     })
                     // if (titles3.length <= count)
-                    dataDB(DBRates, titles3)
+                    dataDB(DBRates, titles3, RatesObj)
                 }
             }))
         }
@@ -184,7 +185,7 @@ router.get('/trending', (req, res) => {
     let titles2 = []
     let avgs = []
     // Data from database
-    function dataDB(r, titles3) {
+    function dataDB(r, titles3, RatesObj) {
         // Other logic
         // r = [[0], [1], [2], [3], [4], [5]]
         let counter;
@@ -254,15 +255,17 @@ router.get('/trending', (req, res) => {
         })
 
 
-        if (context3.length > r.length) {
-            context3 = context3.splice(0, r.length)
-        }
         list1 = list1.reverse(list1.sort())
+
+        context4.push(context3)
+        if (context3.length > RatesObj.length) {
+            context3 = context3.splice(RatesObj.length)
+        }
         res.render('trending', {
             'avgs': avgs,
             'titles3': titles3,
             'rgb': rgbs,
-            "context": context3
+            "context": context4[0]
         })
     }
 })
