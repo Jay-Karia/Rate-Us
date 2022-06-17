@@ -99,14 +99,14 @@ router.post('/submit', (req, res) => {
     rates.save();
 
     res.render('submit')
-
 })
 
 var DBRates = [];
 let RatesObj = [];
 let titles3 = []
 let context4 = []
-let rates2 = []
+let avgs2 = []
+let avgs3 = []
 
 router.get('/trending', (req, res) => {
     globalThis.title;
@@ -138,13 +138,15 @@ router.get('/trending', (req, res) => {
                 let projectName = data.map((pr) => { return pr['Project Name'] });
                 DBRates.push(rates)
 
+                const sum2 = rates.reduce((a, b) => a + b, 0);
+                const avg2 = (sum2 / rates.length) || 0;
+
                 if (projectName[index] === undefined || projectName === null) {
                     projectName[index] = ''
                     projectName = projectName.filter(e => e)
                 }
 
-                // Average
-                RatesObj.push(rates + ' ' + projectName)
+                RatesObj.push(avg2 + ' ' + projectName)
                 RatesObj.sort(function (a, b) {
                     return a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' });
                 });
@@ -186,12 +188,21 @@ router.get('/trending', (req, res) => {
         // Other logic
         // r = [[0], [1], [2], [3], [4], [5]]
         let counter;
-        let one = '0, 102, 77';
-        let two = '0, 26, 102';
-        let three = '51, 0, 102';
-        let four = '102, 0, 77';
-        let five = '102, 0, 26';
-        let rgb = [one, two, three, four, five];
+        let one = '(0, 102, 77);color: white';
+        let two = '(0, 26, 102);color: white';
+        let three = '(51, 0, 102);color: white';
+        let four = '(102, 0, 77);color: white';
+        let five = '(102, 0, 26);color: white';
+
+        let zero = '(130, 130, 130)';
+        // let zero = '(230, 230, 230)';
+        let fourHalf = '(255, 204, 204)';
+        let threeHalf = '(217, 204, 255)'
+        let oneHalf = '(204, 230, 255)'
+        let twoHalf = '(204, 255, 255)'
+        let half = '(204, 255, 217)'
+        let rgb = [zero, one, two, three, four, five];
+        // let rgb = [zero, half, one, oneHalf, two, twoHalf, three, threeHalf, four, fourHalf, five];
 
         r.forEach((e, index) => {
             let R = r[index]
@@ -211,17 +222,20 @@ router.get('/trending', (req, res) => {
         })
         avgs.forEach((e, index) => {
             let avg = avgs[index]
-            if (avg >= 0 && avg <= 1) {
-                rgbs.push(rgb[0])
-            } else if (avg > 1 && avg <= 2) {
-                rgbs.push(rgb[1])
-            } else if (avg > 2 && avg <= 3) {
-                rgbs.push(rgb[2])
-            } else if (avg > 3 && avg <= 4) {
-                rgbs.push(rgb[3])
-            } else if (avg > 4 && avg <= 5) {
-                rgbs.push(rgb[4])
-            }
+
+            // if (avg == 0) rgbs.push(rgb[0])
+            // else if (avg == 0.5) rgbs.push(rgb[1]);
+            // else if (avg == 1) rgbs.push(rgb[2]);
+            // else if (avg == 1.5) rgbs.push(rgb[3]);
+            // else if (avg == 2) rgbs.push(rgb[4]);
+            // else if (avg == 2.5) rgbs.push(rgb[5]);
+            // else if (avg == 3) rgbs.push(rgb[6]);
+            // else if (avg == 3.5) rgbs.push(rgb[7]);
+            // else if (avg == 4) rgbs.push(rgb[8]);
+            // else if (avg == 4.5) rgbs.push(rgb[9]);
+            // else if (avg == 5) rgbs.push(rgb[10]);
+            rgbs.push(rgb[index])
+
             avgs[index] = Math.round(avgs[index] * 10) / 10
         })
 
@@ -245,13 +259,37 @@ router.get('/trending', (req, res) => {
         if (context3.length > RatesObj.length) {
             context3 = context3.splice(RatesObj.length)
         }
-        res.render('trending', {
-            'avgs': avgs,
-            'titles3': titles3,
-            'rgb': rgbs,
-            "context": context4[0]
-        })
+        try {
+            res.render('trending', {
+                'avgs': avgs,
+                'titles3': titles3,
+                'rgb': rgbs,
+                "context": context4[0]
+            })
+            return res.status(404)
+        } catch (e) { }
+        // setTimeout(function () {
+        //     process.on("exit", function () {
+    
+        //       require("child_process")
+        //         .spawn(
+        //           process.argv.shift(),
+        //           process.argv,
+        //           {
+        //             cwd: process.cwd(),
+        //             detached: true,
+        //             stdio: "inherit"
+        //           }
+        //         );
+              
+        //     });
+        //     process.exit(0);
+        // }, 1000);
     }
+})
+
+router.get("/refresh", (req, res)=>{
+    
 })
 
 module.exports = router;
