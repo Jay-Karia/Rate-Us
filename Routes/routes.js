@@ -267,20 +267,21 @@ router.get('/trending', (req, res) => {
                 'rgb': rgbs,
                 "context": context4[0]
             })
-            // setTimeout(function () {
-            //     process.on("exit", function () {
-            //         require("child_process").spawn(process.argv.shift(), process.argv, {
-            //             cwd: process.cwd(),
-            //             detached: true,
-            //             stdio: "inherit"
-            //         });
-            //     });
-            //     process.exit();
-            // }, 5000);
-            // process.exit()
+            setTimeout(function () {
+                process.on("exit", function () {
+                    require("child_process").spawn(process.argv.shift(), process.argv, {
+                        cwd: process.cwd(),
+                        detached: true,
+                        stdio: "inherit"
+                    });
+                });
+                process.exit();
+            }, 5000);
             res.status(404)
             return
         } catch (e) { }
+
+        process.exit()
     }
 })
 
