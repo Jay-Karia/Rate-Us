@@ -107,6 +107,7 @@ let titles3 = []
 let context4 = []
 let avgs2 = []
 let avgs3 = []
+let context3 = []
 
 router.get('/trending', (req, res) => {
     globalThis.title;
@@ -194,7 +195,7 @@ router.get('/trending', (req, res) => {
         let four = '(102, 0, 77);color: white';
         let five = '(102, 0, 26);color: white';
 
-        let zero = '(130, 130, 130)';
+        let zero = '(130, 130, 130);color: white';
         // let zero = '(230, 230, 230)';
         let fourHalf = '(255, 204, 204)';
         let threeHalf = '(217, 204, 255)'
@@ -234,7 +235,7 @@ router.get('/trending', (req, res) => {
             // else if (avg == 4) rgbs.push(rgb[8]);
             // else if (avg == 4.5) rgbs.push(rgb[9]);
             // else if (avg == 5) rgbs.push(rgb[10]);
-            rgbs.push(rgb[index])
+            rgbs.push(rgb[[index]])
 
             avgs[index] = Math.round(avgs[index] * 10) / 10
         })
@@ -266,30 +267,21 @@ router.get('/trending', (req, res) => {
                 'rgb': rgbs,
                 "context": context4[0]
             })
-            return res.status(404)
+            // setTimeout(function () {
+            //     process.on("exit", function () {
+            //         require("child_process").spawn(process.argv.shift(), process.argv, {
+            //             cwd: process.cwd(),
+            //             detached: true,
+            //             stdio: "inherit"
+            //         });
+            //     });
+            //     process.exit();
+            // }, 5000);
+            // process.exit()
+            res.status(404)
+            return
         } catch (e) { }
-        // setTimeout(function () {
-        //     process.on("exit", function () {
-    
-        //       require("child_process")
-        //         .spawn(
-        //           process.argv.shift(),
-        //           process.argv,
-        //           {
-        //             cwd: process.cwd(),
-        //             detached: true,
-        //             stdio: "inherit"
-        //           }
-        //         );
-              
-        //     });
-        //     process.exit(0);
-        // }, 1000);
     }
-})
-
-router.get("/refresh", (req, res)=>{
-    
 })
 
 module.exports = router;
